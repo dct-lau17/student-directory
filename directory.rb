@@ -4,7 +4,7 @@ def input_student
   # create an empty array
   students = []
   puts "Please enter the names of the student"
-    name = gets.chomp
+    name = gets.strip
   # while the name is not empty, repeat this code
   while true do
     records = Hash.new
@@ -16,7 +16,7 @@ def input_student
     height = ""
 
    puts  "Please enter the students cohort" 
-     cohort = gets.chomp
+     cohort = gets.strip
 
     if cohort.empty? 
         records[:cohort] = "november"
@@ -26,20 +26,20 @@ def input_student
 
     while hobby.empty? 
        puts  "Please enter the students hobby" 
-       hobby = gets.chomp
+       hobby = gets.strip
        records[:hobby] = hobby
     end
 
 
   puts "Please enter the height"
-    height = gets.chomp
+    height = gets.strip
     while true do 
         if height.to_i.to_s == height
             records[:height] = height
             break
         else
             puts "Please enter the height"
-            height = gets.chomp
+            height = gets.strip
         end
        
     end 
@@ -54,7 +54,7 @@ def input_student
 
 
   puts "Please enter the names of the student"
-  name = gets.chomp                    
+  name = gets.strip                    
     
     end
     # return the array of students

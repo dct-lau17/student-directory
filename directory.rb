@@ -19,10 +19,11 @@ def input_student
      cohort = gets.chomp
 
     if cohort.empty? 
-       records[:cohort] = "november"
+        records[:cohort] = "november"
     else
-      records[:cohort] = cohort
+        records[:cohort] = cohort
     end
+
     while hobby.empty? 
        puts  "Please enter the students hobby" 
        hobby = gets.chomp
@@ -43,13 +44,13 @@ def input_student
        
     end 
 
-    students << records
-    puts "Now we have #{students.count} students" 
-    puts "Please enter the names of the student"
-       name = gets.chomp                    
+  students << records
+  puts "Now we have #{students.count} students" 
+  puts "Please enter the names of the student"
+  name = gets.chomp                    
     
     end
-    #return the array of students
+    # return the array of students
     students
  end
 
@@ -59,11 +60,31 @@ def print_header
   puts ("-" * header.length).center(80)
 end
 
-def print(students)
-  counter = 0
-  while counter < students.length do
-    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort) is #{students[counter][:height]}cm tall with an interest in #{students[counter][:hobby]} ".center(80) 
-    counter += 1
+# group students by cohort 
+def group(students)
+  group_by_cohort = {}
+  students.each do |student|
+      cohort = student[:cohort]
+      name = student[:name]
+
+      if group_by_cohort[cohort] == nil
+        group_by_cohort[cohort] = []
+      end
+  
+  group_by_cohort[cohort] << name
+
+  end
+    group_by_cohort
+end
+
+def print(group)
+  group.each do |key, value|
+  puts "#{key.to_s.capitalize} cohort".center(80) 
+        value.each do |name|
+        puts name.to_s.center(80)
+        end  
+
+
   end
 end
 
@@ -74,5 +95,6 @@ end
 # nothing happens until we call the methods
 students = input_student
 print_header
-print(students)
+students_grouped = group(students)
+print(students_grouped)
 print_footer(students)

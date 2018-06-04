@@ -45,7 +45,14 @@ def input_student
     end 
 
   students << records
-  puts "Now we have #{students.count} students" 
+
+  if students.count <= 1
+      puts "Now we have #{students.count} student" 
+  else
+      puts "Now we have #{students.count} students" 
+  end
+
+
   puts "Please enter the names of the student"
   name = gets.chomp                    
     

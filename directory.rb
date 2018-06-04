@@ -3,22 +3,51 @@ def input_student
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
- 
+  puts "Please enter the names of the student"
+    name = gets.chomp
   # while the name is not empty, repeat this code
   while true do
-    puts "Please enter the names of the student"
-    name = gets.chomp
-    break if name.empty?
-    puts  "Please enter the students hobby"
-    hobby = gets.chomp
-    puts "Please enter the height"
-    height = gets.chomp
-
-    #add the student has to the array
-    students << {name: name, cohort: :november, hobby: hobby, height: height}
-    puts "Now we have #{students.count} students"
-    # get another name from user
+    records = Hash.new
     break if name.empty? 
+    records[:name] = name
+    
+    cohort = ""
+    hobby = ""
+    height = ""
+
+   puts  "Please enter the students cohort" 
+     cohort = gets.chomp
+
+    if cohort.empty? 
+       records[:cohort] = "november"
+    else
+      records[:cohort] = cohort
+    end
+    while hobby.empty? 
+       puts  "Please enter the students hobby" 
+       hobby = gets.chomp
+       records[:hobby] = hobby
+    end
+
+
+  puts "Please enter the height"
+    height = gets.chomp
+    while true do 
+        if height.to_i.to_s == height
+            records[:height] = height
+            break
+        else
+            puts "Please enter the height"
+            height = gets.chomp
+        end
+       
+    end 
+
+    students << records
+    puts "Now we have #{students.count} students" 
+    puts "Please enter the names of the student"
+       name = gets.chomp                    
+    
     end
     #return the array of students
     students

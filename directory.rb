@@ -25,20 +25,21 @@ def input_student
  end
 
 def print_header
-  puts "The Student of Villains Academy"
-  puts "----------------------------"
+  header = "The Student of Villains Academy"
+  puts header.center(80)
+  puts ("-" * header.length).center(80)
 end
 
 def print(students)
   counter = 0
   while counter < students.length do
-    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort) is #{students[counter][:height]}cm tall with an interest in #{students[counter][:hobby]} "
+    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort) is #{students[counter][:height]}cm tall with an interest in #{students[counter][:hobby]} ".center(80) 
     counter += 1
   end
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great students".center(80)
 end
 
 # nothing happens until we call the methods

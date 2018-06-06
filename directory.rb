@@ -1,60 +1,36 @@
 @students = []
 def input_student
-  
-  puts "To finish, just hit return twice"
-    puts "Please enter the names of the student"
-    name = STDIN.gets.strip
-  # while the name is not empty, repeat this code
   while true do
-    records = Hash.new
-    break if name.empty? 
-    records[:name] = name
+    puts "To finish, leave blank and hit return"
+    puts "Please enter the names of the student"
+    @name = STDIN.gets.strip
+    break if @name.empty?
     
-    cohort = ""
-    hobby = ""
-    height = ""
-
-   puts  "Please enter the students cohort" 
-     cohort = STDIN.gets.strip
-
-    if cohort.empty? 
-        records[:cohort] = "november"
-    else
-        records[:cohort] = cohort
+     puts  "Please enter the students cohort" 
+     @cohort = STDIN.gets.strip
+     if @cohort.empty? 
+     @cohort = "november"
+     end
+    
+    while true do
+      puts  "Please enter the students hobby" 
+      @hobby = STDIN.gets.strip
+      break if !@hobby.empty?
     end
 
-    while hobby.empty? 
-       puts  "Please enter the students hobby" 
-       hobby = STDIN.gets.strip
-       records[:hobby] = hobby
-    end
-
-
-  puts "Please enter the height"
-    height = STDIN.gets.strip
     while true do 
-        if height.to_i.to_s == height
-            records[:height] = height
-            break
-        else
-            puts "Please enter the height"
-            height = STDIN.gets.strip
-        end
-       
+      puts "Please enter the height"
+      @height = STDIN.gets.strip
+      break if @height.to_i.to_s == @height 
     end 
 
-  @students << records
+    add_students_to_hash
 
-  if @students.count <= 1
-      puts "Now we have #{@students.count} student" 
-  else
-      puts "Now we have #{@students.count} students" 
-  end
-
-
-  puts "Please enter the names of the student"
-  name = STDIN.gets.strip                    
-    
+    if @students.count <= 1
+    puts "Now we have #{@students.count} student" 
+    else
+    puts "Now we have #{@students.count} students" 
+    end
   end
 end
 
@@ -95,10 +71,10 @@ def print_footer
 end
 
 
-def interactive_menu	
+def interactive_menu  
   loop do
-	print_menu
-	process(STDIN.gets.chomp)	
+  print_menu
+  process(STDIN.gets.chomp) 
   end
 end
 
@@ -120,17 +96,17 @@ end
 def process(selection)
   case selection
     when "1"
-		input_student
-	when "2"
-		show_students 
+    input_student
+    when "2"
+    show_students 
     when "3"
-    	save_students
+      save_students
     when "4"
-    	load_students
-	when "9"
-		exit
-	else
-		puts "I don't know what you meant, try again"
+      load_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
   end
 end
 
@@ -138,20 +114,20 @@ def save_students
   # open the file for writing
   file = File.open("students.csv", "w")
   @students.each do |student|
-  	student_data = [student[:name], student[:cohort], student[:hobby], student[:height]]
-  	csv_line = student_line = student_data.join(",")
-  	file.puts csv_line
+    student_data = [student[:name], student[:cohort], student[:hobby], student[:height]]
+    csv_line = student_line = student_data.join(",")
+    file.puts csv_line
   end
   file.close
-end	
+end 
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort, hobby, height = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym, hobby: hobby, height: height}
+    @name, @cohort, @hobby, @height = line.chomp.split(",")
+      add_students_to_hash
   end
-  file.close	
+  file.close  
 end
 
 def try_load_students
@@ -161,9 +137,13 @@ def try_load_students
     load_students(filename)
     puts "Loaded #{@students.count} records from #{filename}"
   else
-  	puts "Sorry, #{filename} does not exist."
-  	exit
-  end	
+    puts "Sorry, #{filename} does not exist."
+    exit
+  end 
+end
+
+def add_students_to_hash
+   @students << {name: @name, cohort: @cohort.to_sym, hobby: @hobby, height: @height}
 end
 
 try_load_students

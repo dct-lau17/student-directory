@@ -1,9 +1,8 @@
+@students = []
 def input_student
   
   puts "To finish, just hit return twice"
-  # create an empty array
-  students = []
-  puts "Please enter the names of the student"
+    puts "Please enter the names of the student"
     name = gets.strip
   # while the name is not empty, repeat this code
   while true do
@@ -44,22 +43,20 @@ def input_student
        
     end 
 
-  students << records
+  @students << records
 
-  if students.count <= 1
-      puts "Now we have #{students.count} student" 
+  if @students.count <= 1
+      puts "Now we have #{@students.count} student" 
   else
-      puts "Now we have #{students.count} students" 
+      puts "Now we have #{@students.count} students" 
   end
 
 
   puts "Please enter the names of the student"
   name = gets.strip                    
     
-    end
-    # return the array of students
-    students
- end
+  end
+end
 
 def print_header
   header = "The Student of Villains Academy"
@@ -90,18 +87,45 @@ def print(group)
         value.each do |name|
         puts name.to_s.center(80)
         end  
+    end
+end
+
+def print_footer
+  puts "Overall, we have #{@students.count} great students".center(80)
+end
 
 
+def interactive_menu	
+  loop do
+	print_menu
+	process(gets.chomp)	
   end
 end
 
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students".center(80)
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
 end
 
-# nothing happens until we call the methods
-students = input_student
-print_header
-students_grouped = group(students)
-print(students_grouped)
-print_footer(students)
+def show_students
+  print_header
+  students_grouped = group(@students)
+  print(students_grouped)
+  print_footer
+end
+
+def process(selection)
+  case selection
+    when "1"
+		input_student
+	when "2"
+		show_students 
+	when "9"
+		exit
+	else
+		puts "I don't know what you meant, try again"
+  end
+end
+
+interactive_menu

@@ -3,7 +3,7 @@ def input_student
   
   puts "To finish, just hit return twice"
     puts "Please enter the names of the student"
-    name = gets.strip
+    name = STDIN.gets.strip
   # while the name is not empty, repeat this code
   while true do
     records = Hash.new
@@ -15,7 +15,7 @@ def input_student
     height = ""
 
    puts  "Please enter the students cohort" 
-     cohort = gets.strip
+     cohort = STDIN.gets.strip
 
     if cohort.empty? 
         records[:cohort] = "november"
@@ -25,20 +25,20 @@ def input_student
 
     while hobby.empty? 
        puts  "Please enter the students hobby" 
-       hobby = gets.strip
+       hobby = STDIN.gets.strip
        records[:hobby] = hobby
     end
 
 
   puts "Please enter the height"
-    height = gets.strip
+    height = STDIN.gets.strip
     while true do 
         if height.to_i.to_s == height
             records[:height] = height
             break
         else
             puts "Please enter the height"
-            height = gets.strip
+            height = STDIN.gets.strip
         end
        
     end 
@@ -53,7 +53,7 @@ def input_student
 
 
   puts "Please enter the names of the student"
-  name = gets.strip                    
+  name = STDIN.gets.strip                    
     
   end
 end
@@ -98,7 +98,7 @@ end
 def interactive_menu	
   loop do
 	print_menu
-	process(gets.chomp)	
+	process(STDIN.gets.chomp)	
   end
 end
 
@@ -145,8 +145,8 @@ def save_students
   file.close
 end	
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, height = line.chomp.split(",")
       @students << {name: name, cohort: cohort.to_sym, hobby: hobby, height: height}
@@ -154,4 +154,17 @@ def load_students
   file.close	
 end
 
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) #if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} records from #{filename}"
+  else
+  	puts "Sorry, #{filename} does not exist."
+  	exit
+  end	
+end
+
+try_load_students
 interactive_menu

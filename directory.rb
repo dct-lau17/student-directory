@@ -1,4 +1,5 @@
 @students = []
+@records = 0
 def input_student
   while true do
     puts "To finish, leave blank and hit return"
@@ -25,6 +26,7 @@ def input_student
     end 
 
     add_students_to_hash
+    @records += 1
 
     if @students.count <= 1
     puts "Now we have #{@students.count} student" 
@@ -96,9 +98,9 @@ end
 def process(selection)
   case selection
     when "1"
-    input_student
+      input_student
     when "2"
-    show_students 
+      show_students 
     when "3"
       save_students
     when "4"
@@ -119,6 +121,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Sucessfully updated file with #{@records} more entry"
 end 
 
 def load_students(filename = "students.csv")
@@ -128,17 +131,21 @@ def load_students(filename = "students.csv")
       add_students_to_hash
   end
   file.close  
+  successful_load_message
+end
+
+def successful_load_message
+	puts "Loaded #{@students.count} records from #{@filename}"
 end
 
 def try_load_students
-  filename = ARGV.first # first argument from the command line
-  if filename.nil? 
+  @filename = ARGV.first # first argument from the command line
+  if @filename.nil? 
     load_students("students.csv") # use students.csv if file not given
-  elsif File.exists?(filename) #if it exists
-    load_students(filename)
-    puts "Loaded #{@students.count} records from #{filename}"
+  elsif File.exists?(@filename) #if it exists
+    load_students(@filename)
   else
-    puts "Sorry, #{filename} does not exist."
+    puts "Sorry, #{@filename} does not exist."
     exit
   end 
 end

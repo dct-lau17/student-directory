@@ -155,23 +155,23 @@ end
 
 def save_students(filename)
   # open the file for writing
-  file = File.open(filename, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:hobby], student[:height]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
+  File.open(filename, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:hobby], student[:height]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
+  end 
   puts "Sucessfully updated file with #{@records} more entry"
 end 
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    @name, @cohort, @hobby, @height = line.chomp.split(",")
-      add_students_to_hash
-  end
-  file.close  
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      @name, @cohort, @hobby, @height = line.chomp.split(",")
+        add_students_to_hash
+    end
+  end  
   successful_load_message(filename)
 end
 

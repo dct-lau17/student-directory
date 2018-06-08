@@ -1,3 +1,5 @@
+require 'csv'
+
 
 @students = []
 @records = 0
@@ -155,22 +157,19 @@ end
 
 def save_students(filename)
   # open the file for writing
-  File.open(filename, "w") do |file|
+  CSV.open(filename, "w") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:hobby], student[:height]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << student_data
     end
   end 
   puts "Sucessfully updated file with #{@records} more entry"
 end 
 
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      @name, @cohort, @hobby, @height = line.chomp.split(",")
+  CSV.foreach(filename, "r") do |line|
+      @name, @cohort, @hobby, @height = line
         add_students_to_hash
-    end
   end  
   successful_load_message(filename)
 end
